@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: uoa.assignment.character.CharacterTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.026 s <<< FAILURE! - in uoa.assignment.character.CharacterTests
+checkSayName(uoa.assignment.character.CharacterTests)  Time elapsed: 0.015 s  <<< FAILURE!
+java.lang.AssertionError: [47m[30mMake sure the constructor of GameCharacter class is modified and sayName() method exist as per T1.2 [0morg.junit.ComparisonFailure: expected:<[milan]> but was:<[]>
+	at uoa.assignment.character.CharacterTests.checkSayName(CharacterTests.java:59)
+

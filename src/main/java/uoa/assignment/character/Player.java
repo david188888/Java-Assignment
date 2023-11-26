@@ -11,13 +11,25 @@ public class Player extends GameCharacter{
 	
 	public
 	void hurtCharacter(GameCharacter character) {
-		
+		if (character.successfulDefense()){
+			return;
+		}
+		else {
+			character.setHealth(character.getHealth() - 50);
+		}
 	}
 
 	
 	public
 	boolean successfulDefense() {
-		return true;
+		Random rand = new Random();
+		int randomNum = rand.nextInt(4);
+		if (randomNum == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }

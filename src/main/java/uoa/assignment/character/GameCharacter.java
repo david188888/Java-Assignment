@@ -11,7 +11,8 @@ public abstract class GameCharacter {
 	
 	
 	public GameCharacter (String name) {
-		//complete
+		this.name = name;
+		this.health = 100;
 	}
 	
 	public abstract void hurtCharacter (GameCharacter character);
@@ -20,15 +21,15 @@ public abstract class GameCharacter {
 	
 	
 	public String sayName() {
-	return ""; 
+	return this.name; 
 	}
 
 	public int getHealth() {
-		return -1;
+		return this.health;
 	}
 
 	public void setHealth(int health) {
-		//complete
+		this.health = health;
 	}
 }
 

@@ -16,48 +16,50 @@ public class Game {
     }
 
     public boolean nextRound(String input) {
-        int count = 0;
-        for (int i = 1; i < getMap().characters.length; i++) {
-            Monster monster = (Monster) getMap().characters[i];
-            if (monster.getHealth() == 0) {
-                count++;
-            }
-        }
-        if (count == 3) {
-            System.out.println("“YOU HAVE WON!");
-            return true;
-        }
-
-        else if (getMap().characters[0].getHealth() == 0) {
-            System.out.println("“YOU HAVE DIED!");
-            return true;
-        }
-
-        else {
-            if (input.equals("up") || input.equals("down") || input.equals("left") || input.equals("right")) {
-                GameLogic.moveCharacter(input, this.getMap(), this.getMap().characters[0]);
-                System.out.println("Player is moving " + input);
-                for (int i = 1; i < getMap().characters.length; i++) {
-                    Monster monster = (Monster) getMap().characters[i];
-                    if (monster.getHealth() > 0) {
-                        String move = monster.decideMove();
-                        System.out.println(monster.sayName() + " is moving " + move);
-                        GameLogic.moveCharacter(move, getMap(), monster);
-                    } else {
-                        System.out.println(monster.sayName() + " is dead");
-                    }
-
+        if (input.equals("up") || input.equals("down") || input.equals("left") || input.equals("right")) {
+            GameLogic.moveCharacter(input, this.getMap(), this.getMap().characters[0]);
+            System.out.println("Player is moving " + input);
+            for (int i = 1; i < getMap().characters.length; i++) {
+                Monster monster = (Monster) getMap().characters[i];
+                if (monster.getHealth() > 0) {
+                    String move = monster.decideMove();
+                    System.out.println(monster.sayName() + " is moving " + move);
+                    GameLogic.moveCharacter(move, getMap(), monster);
+                } else {
+                    System.out.println(monster.sayName() + " is dead");
+                    getMap().layout[monster.row][monster.column] = "x";
                 }
-                System.out.println(" ");
-                printhealth();
+
+            }
+            System.out.println(" ");
+            printhealth();
+            System.out.println(" ");
+            int count = 0;
+            for (int i = 1; i < getMap().characters.length; i++) {
+                Monster monster = (Monster) getMap().characters[i];
+                if (monster.getHealth() == 0) {
+                    count++;
+                }
+            }
+            if (count == 3) {
+                System.out.println("“YOU HAVE WON!");
                 System.out.println(" ");
                 getMap().printLayout();
+                return true;
+            } else if (getMap().characters[0].getHealth() == 0) {
+                System.out.println("“YOU HAVE DIED!");
                 System.out.println(" ");
-                return false;
+                getMap().printLayout();
+                return true;
             } else {
-                System.out.println("Use only keywords up, down, left, right");
+                System.out.println(" ");
+                getMap().printLayout();
                 return false;
             }
+
+        } else {
+            System.out.println("Use only keywords up, down, left, right");
+            return false;
         }
     }
 

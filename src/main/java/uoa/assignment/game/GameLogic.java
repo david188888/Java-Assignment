@@ -36,8 +36,11 @@ public class GameLogic {
 		} else {
 			if (invalidPlayer(character)) {
 				character.column++;
-				if (checkMonster(character, gameMap)) {
+				if (checkMonsterExist(character, gameMap)) {
 					hurtMonster(character, gameMap);
+					character.column--;
+				} else if (checkdeadMonster(character, gameMap)) {
+					System.out.println("Character already dead");
 					character.column--;
 				} else {
 					character.column--;
@@ -46,29 +49,33 @@ public class GameLogic {
 					gameMap.layout[character.row][character.column] = "*";
 				}
 			} else {
-				if (checkMonsterHealth(character, gameMap)){
+				if (checkMonsterHealth(character, gameMap)) {
 					gameMap.layout[character.row][character.column] = "x";
-				}
-				else{
-				character.column++;
-				if (checkMonster(character, gameMap)) {
-					System.out.println("Monster already there so can't move");
-					character.column--;
-				}
-
-				else if (checkPlayer(character, gameMap)) {
-					hurtPlayer(character, gameMap);
-					character.column--;
-				}
-
-				else {
-					character.column--;
-					initialisepossition(character, gameMap);
+				} else {
 					character.column++;
-					gameMap.layout[character.row][character.column] = "%";
+					if (checkMonsterExist(character, gameMap)) {
+						System.out.println("Monster already there so can't move");
+						character.column--;
+					}
+
+					else if(checkdeadMonster(character, gameMap)){
+						System.out.println("Character already dead");
+						character.column--;
+					}
+
+					else if (checkPlayer(character, gameMap)) {
+						hurtPlayer(character, gameMap);
+						character.column--;
+					}
+
+					else {
+						character.column--;
+						initialisepossition(character, gameMap);
+						character.column++;
+						gameMap.layout[character.row][character.column] = "%";
+					}
 				}
 			}
-		}
 		}
 	}
 
@@ -78,39 +85,48 @@ public class GameLogic {
 		} else {
 			if (invalidPlayer(character)) {
 				character.column--;
-				if (checkMonster(character, gameMap)) {
+				if (checkMonsterExist(character, gameMap)) {
 					hurtMonster(character, gameMap);
 					character.column++;
-				} else {
+				} else if (checkdeadMonster(character, gameMap)) {
+					System.out.println("Character already dead");
+					character.column++;
+				}
+
+				else {
 					character.column++;
 					initialisepossition(character, gameMap);
 					character.column--;
 					gameMap.layout[character.row][character.column] = "*";
 				}
 			} else {
-				if (checkMonsterHealth(character, gameMap)){
+				if (checkMonsterHealth(character, gameMap)) {
 					gameMap.layout[character.row][character.column] = "x";
-				}
-				else{
-				character.column--;
-				if (checkMonster(character, gameMap)) {
-					System.out.println("Monster already there so can't move");
-					character.column++;
-				} 
-
-				else if (checkPlayer(character, gameMap)) {
-					hurtPlayer(character, gameMap);
-					character.column++;
-				} 
-				
-				else {
-					character.column++;
-					initialisepossition(character, gameMap);
+				} else {
 					character.column--;
-					gameMap.layout[character.row][character.column] = "%";
+					if (checkMonsterExist(character, gameMap)) {
+						System.out.println("Monster already there so can't move");
+						character.column++;
+					}
+
+					else if (checkdeadMonster(character, gameMap)){
+						System.out.println("Character already dead");
+						character.column++;
+					}
+
+					else if (checkPlayer(character, gameMap)) {
+						hurtPlayer(character, gameMap);
+						character.column++;
+					}
+
+					else {
+						character.column++;
+						initialisepossition(character, gameMap);
+						character.column--;
+						gameMap.layout[character.row][character.column] = "%";
+					}
 				}
 			}
-		}
 		}
 	}
 
@@ -120,28 +136,13 @@ public class GameLogic {
 		} else {
 			if (invalidPlayer(character)) {
 				character.row--;
-				if (checkMonster(character, gameMap)) {
+				if (checkMonsterExist(character, gameMap)) {
 					hurtMonster(character, gameMap);
 					character.row++;
-				} else {
-					character.row++;
-					initialisepossition(character, gameMap);
-					character.row--;
-					gameMap.layout[character.row][character.column] = "*";
 				}
-			} else {
-				if (checkMonsterHealth(character, gameMap)){
-					gameMap.layout[character.row][character.column] = "x";
-				}
-				else{
-				character.row--;
-				if (checkMonster(character, gameMap)) {
-					System.out.println("Monster already there so can't move");
-					character.row++;
-				} 
-				
-				else if (checkPlayer(character, gameMap)) {
-					hurtPlayer(character, gameMap);
+
+				else if (checkdeadMonster(character, gameMap)) {
+					System.out.println("Character already dead");
 					character.row++;
 				}
 
@@ -149,10 +150,36 @@ public class GameLogic {
 					character.row++;
 					initialisepossition(character, gameMap);
 					character.row--;
-					gameMap.layout[character.row][character.column] = "%";
+					gameMap.layout[character.row][character.column] = "*";
+				}
+			} else {
+				if (checkMonsterHealth(character, gameMap)) {
+					gameMap.layout[character.row][character.column] = "x";
+				} else {
+					character.row--;
+					if (checkMonsterExist(character, gameMap)) {
+						System.out.println("Monster already there so can't move");
+						character.row++;
+					}
+
+					else if (checkdeadMonster(character, gameMap)){
+						System.out.println("Character already dead");
+						character.row++;
+					}
+
+					else if (checkPlayer(character, gameMap)) {
+						hurtPlayer(character, gameMap);
+						character.row++;
+					}
+
+					else {
+						character.row++;
+						initialisepossition(character, gameMap);
+						character.row--;
+						gameMap.layout[character.row][character.column] = "%";
+					}
 				}
 			}
-		}
 		}
 	}
 
@@ -162,28 +189,11 @@ public class GameLogic {
 		} else {
 			if (invalidPlayer(character)) {
 				character.row++;
-				if (checkMonster(character, gameMap)) {
+				if (checkMonsterExist(character, gameMap)) {
 					hurtMonster(character, gameMap);
 					character.row--;
-				} else {
-					character.row--;
-					initialisepossition(character, gameMap);
-					character.row++;
-					gameMap.layout[character.row][character.column] = "*";
-				}
-			} else {
-				if (checkMonsterHealth(character, gameMap)){
-					gameMap.layout[character.row][character.column] = "x";
-				}
-				else{
-				character.row++;
-				if (checkMonster(character, gameMap)) {
-					System.out.println("Monster already there so can't move");
-					character.row--;
-				} 
-				
-				else if (checkPlayer(character, gameMap)) {
-					hurtPlayer(character, gameMap);
+				} else if (checkdeadMonster(character, gameMap)) {
+					System.out.println("Character already dead");
 					character.row--;
 				}
 
@@ -191,10 +201,36 @@ public class GameLogic {
 					character.row--;
 					initialisepossition(character, gameMap);
 					character.row++;
-					gameMap.layout[character.row][character.column] = "%";
+					gameMap.layout[character.row][character.column] = "*";
+				}
+			} else {
+				if (checkMonsterHealth(character, gameMap)) {
+					gameMap.layout[character.row][character.column] = "x";
+				} else {
+					character.row++;
+					if (checkMonsterExist(character, gameMap)) {
+						System.out.println("Monster already there so can't move");
+						character.row--;
+					}
+
+					else if (checkdeadMonster(character, gameMap)){
+						System.out.println("Character already dead");
+						character.row--;
+					}
+
+					else if (checkPlayer(character, gameMap)) {
+						hurtPlayer(character, gameMap);
+						character.row--;
+					}
+
+					else {
+						character.row--;
+						initialisepossition(character, gameMap);
+						character.row++;
+						gameMap.layout[character.row][character.column] = "%";
+					}
 				}
 			}
-		}
 		}
 	}
 
@@ -210,8 +246,16 @@ public class GameLogic {
 		gameMap.layout[character.row][character.column] = ".";
 	}
 
-	private static boolean checkMonster(GameCharacter character, Map gameMap) {
-		if ((gameMap.layout[character.row][character.column].equals("%")) || (gameMap.layout[character.row][character.column].equals("x"))) {
+	private static boolean checkMonsterExist(GameCharacter character, Map gameMap) {
+		if (gameMap.layout[character.row][character.column].equals("%")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private static boolean checkdeadMonster(GameCharacter character, Map gameMap) {
+		if (gameMap.layout[character.row][character.column].equals("x")) {
 			return true;
 		} else {
 			return false;
@@ -222,22 +266,21 @@ public class GameLogic {
 		for (int i = 1; i < gameMap.characters.length; i++) {
 			if (gameMap.characters[i].row == character.row && gameMap.characters[i].column == character.column) {
 				GameCharacter hurt_monster = gameMap.characters[i];
-				if (checkMonsterHealth(hurt_monster, gameMap)){
+				if (checkMonsterHealth(hurt_monster, gameMap)) {
 					// System.out.println("Character already dead");
 					gameMap.layout[hurt_monster.row][hurt_monster.column] = "x";
 					break;
+				} else {
+					character.hurtCharacter(hurt_monster);
+					break;
 				}
-				else{
-				character.hurtCharacter(hurt_monster);
-				break;
 			}
-		}
 		}
 	}
 
 	private static void hurtPlayer(GameCharacter character, Map gameMap) {
-			GameCharacter hurt_player = gameMap.characters[0];
-			character.hurtCharacter(hurt_player);
+		GameCharacter hurt_player = gameMap.characters[0];
+		character.hurtCharacter(hurt_player);
 
 	}
 
@@ -249,15 +292,12 @@ public class GameLogic {
 		}
 	}
 
-
-	private static boolean checkMonsterHealth(GameCharacter character, Map gameMap){
-		if (character.getHealth()==0){
+	private static boolean checkMonsterHealth(GameCharacter character, Map gameMap) {
+		if (character.getHealth() == 0) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
-
 
 }

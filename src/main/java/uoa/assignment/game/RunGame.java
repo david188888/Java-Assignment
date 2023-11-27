@@ -6,11 +6,10 @@ public class RunGame {
 
 	private static boolean gameOver = false;
 
-	public static void main(String[] arg) {
-		int height = arg.length >= 2 ? Integer.parseInt(arg[0]) : 0;
-		int width = arg.length >= 2 ? Integer.parseInt(arg[1]) : 0;
-		// int height = 3;
-		// int width = 3;
+	public static void main(String[] args) {
+		int height = args.length > 0 ? Integer.parseInt(args[0]) : 0;
+		int width = args.length > 1 ? Integer.parseInt(args[1]) : 0;
+
 		int count = 0;
 		Game game = new Game(height, width);
 		System.out.println(" ");

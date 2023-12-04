@@ -11,7 +11,7 @@ public class Map {
 
   Map(int height, int width) {
     this.layout = new String[height][width];
-    initialiseArray();
+    initialiseArray(); // initialise the map
     Player player = new Player("Player");
     player.row = height - 1;
     player.column = width - 1;
@@ -31,8 +31,8 @@ public class Map {
   }
 
   private void initialiseArray() {
-    for (int i = 0; i < layout.length; i++) {
-      for (int j = 0; j < layout[i].length; j++) {
+    for (int i = 0; i < layout.length; i++) {  
+      for (int j = 0; j < layout[i].length; j++) { 
         if ((i == 0 && j == 0) || (i == 0 && j == layout[i].length - 1) || (i == layout.length - 1 && j == 0)) {
           layout[i][j] = "%";
         } else if (i == layout.length - 1 && j == layout[i].length - 1) {

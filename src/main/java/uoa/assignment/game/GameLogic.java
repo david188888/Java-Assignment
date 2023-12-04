@@ -13,7 +13,7 @@ public class GameLogic {
 			System.out.println("Use only keywords up, down, left, right");
 			return;
 		} else {
-			switch (input) {
+			switch (input) { // using switch statement to decide the move of the player
 				case "up":
 					moveUp(character, gameMap);
 					break;
@@ -31,46 +31,46 @@ public class GameLogic {
 	}
 
 	private static void moveRight(GameCharacter character, Map gameMap) {
-		if (character.column == gameMap.layout[0].length - 1) {
+		if (character.column == gameMap.layout[0].length - 1) { // check if the player is at the rightmost column
 			System.out.println("You can't go right. You lose a move.");
 		} else {
-			if (invalidPlayer(character)) {
-				character.column++;
-				if (checkMonsterExist(character, gameMap)) {
+			if (invalidPlayer(character)) { // check if the character is a player
+				character.column++; // move the player
+				if (checkMonsterExist(character, gameMap)) { // check if there is a monster at the next position
 					hurtMonster(character, gameMap);
-					character.column--;
-				} else if (checkdeadMonster(character, gameMap)) {
+					character.column--; // move the player back to the original position
+				} else if (checkdeadMonster(character, gameMap)) { // check if the monster is dead
 					System.out.println("Character already dead");
 					character.column--;
-				} else {
-					character.column--;
+				} else { // if there is no monster at the next position
+					character.column--; 
 					initialisepossition(character, gameMap);
 					character.column++;
 					gameMap.layout[character.row][character.column] = "*";
 				}
 			} else {
-				if (checkMonsterHealth(character, gameMap)) {
+				if (checkMonsterHealth(character, gameMap)) { // check if the monster is dead
 					gameMap.layout[character.row][character.column] = "x";
 				} else {
 					character.column++;
-					if (checkMonsterExist(character, gameMap)) {
+					if (checkMonsterExist(character, gameMap)) { // check if there is a monster at the next position
 						System.out.println("Monster already there so can't move");
 						character.column--;
 					}
 
-					else if(checkdeadMonster(character, gameMap)){
+					else if(checkdeadMonster(character, gameMap)){ // check if the monster is dead
 						System.out.println("Character already dead");
 						character.column--;
 					}
 
-					else if (checkPlayer(character, gameMap)) {
+					else if (checkPlayer(character, gameMap)) { // check if there is a player at the next position
 						hurtPlayer(character, gameMap);
 						character.column--;
 					}
 
 					else {
 						character.column--;
-						initialisepossition(character, gameMap);
+						initialisepossition(character, gameMap); // replace the original position with "."
 						character.column++;
 						gameMap.layout[character.row][character.column] = "%";
 					}
@@ -80,10 +80,10 @@ public class GameLogic {
 	}
 
 	private static void moveLeft(GameCharacter character, Map gameMap) {
-		if (character.column == 0) {
+		if (character.column == 0) { // check if the player is at the leftmost column
 			System.out.println("You can't go left. You lose a move.");
 		} else {
-			if (invalidPlayer(character)) {
+			if (invalidPlayer(character)) { // check if the character is a player
 				character.column--;
 				if (checkMonsterExist(character, gameMap)) {
 					hurtMonster(character, gameMap);
@@ -95,7 +95,7 @@ public class GameLogic {
 
 				else {
 					character.column++;
-					initialisepossition(character, gameMap);
+					initialisepossition(character, gameMap); // replace the original position with "."
 					character.column--;
 					gameMap.layout[character.row][character.column] = "*";
 				}
@@ -104,12 +104,12 @@ public class GameLogic {
 					gameMap.layout[character.row][character.column] = "x";
 				} else {
 					character.column--;
-					if (checkMonsterExist(character, gameMap)) {
-						System.out.println("Monster already there so can't move");
+					if (checkMonsterExist(character, gameMap)) { // check if there is a monster at the next position
+						System.out.println("Monster already there so can't move"); 
 						character.column++;
 					}
 
-					else if (checkdeadMonster(character, gameMap)){
+					else if (checkdeadMonster(character, gameMap)){ // check if the monster is dead
 						System.out.println("Character already dead");
 						character.column++;
 					}
@@ -131,12 +131,12 @@ public class GameLogic {
 	}
 
 	private static void moveUp(GameCharacter character, Map gameMap) {
-		if (character.row == 0) {
+		if (character.row == 0) { // check if the player is at the top row
 			System.out.println("You can't go up. You lose a move.");
 		} else {
 			if (invalidPlayer(character)) {
-				character.row--;
-				if (checkMonsterExist(character, gameMap)) {
+				character.row--; 
+				if (checkMonsterExist(character, gameMap)) { // check if there is a monster at the next position
 					hurtMonster(character, gameMap);
 					character.row++;
 				}
@@ -156,7 +156,7 @@ public class GameLogic {
 				if (checkMonsterHealth(character, gameMap)) {
 					gameMap.layout[character.row][character.column] = "x";
 				} else {
-					character.row--;
+					character.row--; // move the monster
 					if (checkMonsterExist(character, gameMap)) {
 						System.out.println("Monster already there so can't move");
 						character.row++;
@@ -184,12 +184,12 @@ public class GameLogic {
 	}
 
 	private static void moveDown(GameCharacter character, Map gameMap) {
-		if (character.row == gameMap.layout.length - 1) {
+		if (character.row == gameMap.layout.length - 1) { // check if the player is at the bottom row
 			System.out.println("You can't go down. You lose a move.");
 		} else {
 			if (invalidPlayer(character)) {
-				character.row++;
-				if (checkMonsterExist(character, gameMap)) {
+				character.row++; // move the player
+				if (checkMonsterExist(character, gameMap)) { // check if there is a monster at the next position
 					hurtMonster(character, gameMap);
 					character.row--;
 				} else if (checkdeadMonster(character, gameMap)) {
@@ -207,8 +207,8 @@ public class GameLogic {
 				if (checkMonsterHealth(character, gameMap)) {
 					gameMap.layout[character.row][character.column] = "x";
 				} else {
-					character.row++;
-					if (checkMonsterExist(character, gameMap)) {
+					character.row++; // move the monster
+					if (checkMonsterExist(character, gameMap)) { // check if there is a monster at the next position
 						System.out.println("Monster already there so can't move");
 						character.row--;
 					}
@@ -265,7 +265,7 @@ public class GameLogic {
 	private static void hurtMonster(GameCharacter character, Map gameMap) {
 		for (int i = 1; i < gameMap.characters.length; i++) {
 			if (gameMap.characters[i].row == character.row && gameMap.characters[i].column == character.column) {
-				GameCharacter hurt_monster = gameMap.characters[i];
+				GameCharacter hurt_monster = gameMap.characters[i]; // find the monster at the next position
 				if (checkMonsterHealth(hurt_monster, gameMap)) {
 					// System.out.println("Character already dead");
 					gameMap.layout[hurt_monster.row][hurt_monster.column] = "x";
@@ -279,7 +279,7 @@ public class GameLogic {
 	}
 
 	private static void hurtPlayer(GameCharacter character, Map gameMap) {
-		GameCharacter hurt_player = gameMap.characters[0];
+		GameCharacter hurt_player = gameMap.characters[0]; // find the player at the next position
 		character.hurtCharacter(hurt_player);
 
 	}

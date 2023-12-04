@@ -18,8 +18,8 @@ public class Player extends GameCharacter {
 
 	public boolean successfulDefense() {
 		Random rand = new Random();
-		int randomNum = rand.nextInt(10);
-		if (randomNum < 3) {
+		int randomNum = rand.nextInt(10); //using nextInt(10) to generate a random number between 0 and 9 inclusive
+		if (randomNum < 3) { // 30% chance of successful defense
 			return true;
 		} else {
 			return false;

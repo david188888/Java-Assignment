@@ -7,34 +7,36 @@ public class Game {
     private Map map;
 
     Game(int height, int width) {
-        this.map = new Map(height, width);
+        this.map = new Map(height, width); // create a new map
         map.printLayout();
     }
 
+    // getter for map
     public Map getMap() {
         return this.map;
     }
+
 
     public boolean nextRound(String input) {
         if (input.equals("up") || input.equals("down") || input.equals("left") || input.equals("right")) {
             GameLogic.moveCharacter(input, this.getMap(), this.getMap().characters[0]);
             System.out.println("Player is moving " + input);
-            for (int i = 1; i < getMap().characters.length; i++) {
+            for (int i = 1; i < getMap().characters.length; i++) { // loop through all the monsters
                 Monster monster = (Monster) getMap().characters[i];
                 if (monster.getHealth() > 0) {
-                    String move = monster.decideMove();
+                    String move = monster.decideMove(); 
                     System.out.println(monster.sayName() + " is moving " + move);
-                    GameLogic.moveCharacter(move, getMap(), monster);
+                    GameLogic.moveCharacter(move, getMap(), monster); // move the monster
                 } else {
-                    System.out.println(monster.sayName() + " is dead");
-                    getMap().layout[monster.row][monster.column] = "x";
+                    System.out.println(monster.sayName() + " is dead"); 
+                    getMap().layout[monster.row][monster.column] = "x"; // replace the monster with x again to make sure the monster is dead
                 }
 
             }
             System.out.println(" ");
             printhealth();
             System.out.println(" ");
-            int count = 0;
+            int count = 0; // count the number of dead monsters
             for (int i = 1; i < getMap().characters.length; i++) {
                 Monster monster = (Monster) getMap().characters[i];
                 if (monster.getHealth() == 0) {
